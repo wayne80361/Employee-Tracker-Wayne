@@ -42,6 +42,12 @@ const roleQuestions = [
     name: "salary",
     message: "Enter the salary for the role:",
   },
+  {
+    type: "list",
+    name: "department_id",
+    message: "Which department does the role belong to:",
+    choices: [],
+  },
   // Add more questions as needed
 ];
 
@@ -129,6 +135,8 @@ const init = async () => {
   //     message: "Select the employee's role:",
   //     choices: roleList,
   //   };
+  const departmentList = await getDepartmentList();
+  roleQuestions[2].choices = departmentList;
 
   inquirer
     .prompt([
