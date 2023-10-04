@@ -13,6 +13,7 @@ const employeeQuestions = [
     name: "last_name",
     message: "Enter the last name of the employee:",
   },
+  // Add more questions for role and manager selection
 ];
 
 const roleQuestions = [
@@ -37,3 +38,28 @@ const managerQuestions = [
   },
   // Add more questions as needed
 ];
+
+inquirer
+  .prompt([
+    {
+      type: "list",
+      name: "action",
+      message: "What would you like to do?",
+      choices: ["Add Employee", "Add Role", "Add Manager"],
+    },
+  ])
+  .then((answers) => {
+    if (answers.action === "Add Employee") {
+      inquirer.prompt(employeeQuestions).then((employeeData) => {
+        addEmployee(employeeData);
+      });
+    } else if (answers.action === "Add Role") {
+      inquirer.prompt(roleQuestions).then((roleData) => {
+        addRole(roleData);
+      });
+    } else if (answers.action === "Add Manager") {
+      inquirer.prompt(managerQuestions).then((managerData) => {
+        addManager(managerData);
+      });
+    }
+  });
