@@ -11,4 +11,5 @@ ON employee.role_id = role.id
 JOIN    department
 on role.department_id = department.id
 LEFT JOIN   employee AS manager
-ON employee.manager_id = manager.id;
+ON employee.manager_id = manager.id
+ORDER BY employee.id;
