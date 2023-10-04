@@ -3,6 +3,7 @@ const inquirer = require("inquirer");
 const { addEmployee } = require("./employeeFunction.js");
 const { addRole } = require("./roleFunction.js");
 const { addDepartment } = require("./departmentFunction.js");
+const { updateRole } = require("./roleFunction.js");
 const connection = require("./config/connection.js");
 
 const employeeQuestions = [
@@ -58,6 +59,15 @@ const departmentQuestions = [
     message: "Enter the name of the department:",
   },
   // Add more questions as needed
+];
+
+const updateRoleQuestions = [
+  {
+    type: "list",
+    name: "employee",
+    message: "Which employee's role do you want to update:",
+    choices: [],
+  },
 ];
 
 const getRoleList = () => {
@@ -120,6 +130,7 @@ const init = async () => {
   // Get the list of existing employees for manager selection
   const employeeList = await getEmployeeList();
   employeeQuestions[2].choices = employeeList;
+  updateRoleQuestions[0].choices = employeeList;
   // Add the employee choices to the employeeQuestions
   //   employeeQuestions[2] = {
   //     type: "list",
@@ -144,7 +155,7 @@ const init = async () => {
         type: "list",
         name: "action",
         message: "What would you like to do?",
-        choices: ["Add Employee", "Add Role", "Add Department"],
+        choices: ["Add Employee", "Add Role", "Add Department", "Update Role"],
       },
     ])
     .then((answers) => {
@@ -159,6 +170,10 @@ const init = async () => {
       } else if (answers.action === "Add Department") {
         inquirer.prompt(departmentQuestions).then((departmentData) => {
           addDepartment(departmentData);
+        });
+      } else if (answers.action === "Update Role") {
+        inquirer.prompt(updateRoleQuestions).then((updateRoleData) => {
+          updateRole(updateRoleData);
         });
       }
     });
