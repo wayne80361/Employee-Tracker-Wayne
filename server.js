@@ -1,18 +1,39 @@
 const inquirer = require("inquirer");
-const mysql = require("mysql2");
-const cyanColor = "\x1b[36m";
-const greenColor = "\x1b[32m";
-const whiteColor = "\x1b[37m";
 
-// create connection to database
-const db = mysql.createConnection(
+const { addEmployee } = require("./employeeFunction.js");
+
+const employeeQuestions = [
   {
-    host: "localhost",
-    user: "root",
-    password: "1234",
-    database: "businesses_db",
+    type: "input",
+    name: "first_name",
+    message: "Enter the first name of the employee:",
   },
-  console.log(
-    `${cyanColor}Connected to the ${greenColor}businesses_db ${cyanColor}database${whiteColor}`
-  )
-);
+  {
+    type: "input",
+    name: "last_name",
+    message: "Enter the last name of the employee:",
+  },
+];
+
+const roleQuestions = [
+  {
+    type: "input",
+    name: "title",
+    message: "Enter the title of the role:",
+  },
+  {
+    type: "input",
+    name: "salary",
+    message: "Enter the salary for the role:",
+  },
+  // Add more questions as needed
+];
+
+const managerQuestions = [
+  {
+    type: "input",
+    name: "manager_name",
+    message: "Enter the name of the manager:",
+  },
+  // Add more questions as needed
+];
