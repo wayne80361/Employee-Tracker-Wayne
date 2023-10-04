@@ -1,6 +1,7 @@
 const inquirer = require("inquirer");
 
 const { addEmployee } = require("./employeeFunction.js");
+const { addRole } = require("./roleFunction.js");
 
 const employeeQuestions = [
   {
@@ -30,22 +31,13 @@ const roleQuestions = [
   // Add more questions as needed
 ];
 
-const managerQuestions = [
-  {
-    type: "input",
-    name: "manager_name",
-    message: "Enter the name of the manager:",
-  },
-  // Add more questions as needed
-];
-
 inquirer
   .prompt([
     {
       type: "list",
       name: "action",
       message: "What would you like to do?",
-      choices: ["Add Employee", "Add Role", "Add Manager"],
+      choices: ["Add Employee", "Add Role"],
     },
   ])
   .then((answers) => {
@@ -56,10 +48,6 @@ inquirer
     } else if (answers.action === "Add Role") {
       inquirer.prompt(roleQuestions).then((roleData) => {
         addRole(roleData);
-      });
-    } else if (answers.action === "Add Manager") {
-      inquirer.prompt(managerQuestions).then((managerData) => {
-        addManager(managerData);
       });
     }
   });
