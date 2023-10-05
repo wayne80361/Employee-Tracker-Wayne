@@ -1,9 +1,10 @@
 const inquirer = require("inquirer");
 
 const { addEmployee } = require("./employeeFunction.js");
-const { addRole } = require("./roleFunction.js");
+const { addRole, updateRole } = require("./roleFunction.js");
 const { addDepartment } = require("./departmentFunction.js");
-const { updateRole } = require("./roleFunction.js");
+// const { updateRole } = require("./roleFunction.js");
+const { viewAllEmployees } = require("./viewFunction.js");
 const connection = require("./config/connection.js");
 
 const employeeQuestions = [
@@ -163,7 +164,13 @@ const init = async () => {
         type: "list",
         name: "action",
         message: "What would you like to do?",
-        choices: ["Add Employee", "Add Role", "Add Department", "Update Role"],
+        choices: [
+          "Add Employee",
+          "Add Role",
+          "Add Department",
+          "Update Role",
+          "View All Employee",
+        ],
       },
     ])
     .then((answers) => {
@@ -183,6 +190,8 @@ const init = async () => {
         inquirer.prompt(updateRoleQuestions).then((updateRoleData) => {
           updateRole(updateRoleData);
         });
+      } else if (answers.action === "View All Employee") {
+        viewAllEmployees();
       }
     });
 };

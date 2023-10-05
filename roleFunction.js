@@ -13,8 +13,6 @@ const addRole = (roleData) => {
 const updateRole = (updateRoleData) => {
   const roleId = updateRoleData.role_id;
   const employeeId = updateRoleData.employee_id;
-  // delete updateRoleData.role_id;
-  // delete updateRoleData.employee_id;
 
   connection.query(
     "UPDATE employee SET role_id = ? WHERE id = ?",
