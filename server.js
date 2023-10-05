@@ -4,7 +4,11 @@ const { addEmployee } = require("./employeeFunction.js");
 const { addRole, updateRole } = require("./roleFunction.js");
 const { addDepartment } = require("./departmentFunction.js");
 // const { updateRole } = require("./roleFunction.js");
-const { viewAllEmployees, viewAllDepartments } = require("./viewFunction.js");
+const {
+  viewAllEmployees,
+  viewAllDepartments,
+  viewAllRoles,
+} = require("./viewFunction.js");
 
 const connection = require("./config/connection.js");
 
@@ -169,9 +173,10 @@ const init = async () => {
           "Add Employee",
           "Add Role",
           "Add Department",
-          "Update Role",
-          "View All Employee",
-          "View All Department",
+          "Update a Role",
+          "View All Employees",
+          "View All Departments",
+          "View all Roles",
         ],
       },
     ])
@@ -188,14 +193,16 @@ const init = async () => {
         inquirer.prompt(departmentQuestions).then((departmentData) => {
           addDepartment(departmentData);
         });
-      } else if (answers.action === "Update Role") {
+      } else if (answers.action === "Update a Role") {
         inquirer.prompt(updateRoleQuestions).then((updateRoleData) => {
           updateRole(updateRoleData);
         });
-      } else if (answers.action === "View All Employee") {
+      } else if (answers.action === "View All Employees") {
         viewAllEmployees();
-      } else if (answers.action === "View All Department") {
+      } else if (answers.action === "View All Departments") {
         viewAllDepartments();
+      } else if (answers.action === "View all Roles") {
+        viewAllRoles();
       }
     });
 };

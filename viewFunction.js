@@ -29,14 +29,32 @@ const viewAllEmployees = () => {
 };
 
 const viewAllDepartments = () => {
-  connection.query(`SELECT * FROM department`, (err, results) => {
-    if (err) {
-      console.error("Error fetching departments: ", err);
-    } else {
-      // Display the list of departments
-      console.table(results);
+  connection.query(
+    `SELECT name AS "Department Name" FROM department`,
+    (err, results) => {
+      if (err) {
+        console.error("Error fetching departments: ", err);
+      } else {
+        // Display the list of departments
+        console.table(results);
+      }
     }
-  });
+  );
 };
 
-module.exports = { viewAllEmployees, viewAllDepartments };
+const viewAllRoles = () => {
+  connection.query(
+    `SELECT role.title, role.salary, department.name AS "Department" FROM role
+  JOIN department on role.department_id = department.id`,
+    (err, results) => {
+      if (err) {
+        console.error("Error fetching roles: ", err);
+      } else {
+        // Display the list of roles
+        console.table(results);
+      }
+    }
+  );
+};
+
+module.exports = { viewAllEmployees, viewAllDepartments, viewAllRoles };
