@@ -64,8 +64,14 @@ const departmentQuestions = [
 const updateRoleQuestions = [
   {
     type: "list",
-    name: "employee",
+    name: "employee_id",
     message: "Which employee's role do you want to update:",
+    choices: [],
+  },
+  {
+    type: "list",
+    name: "role_id",
+    message: "Which role do you want to assign to:",
     choices: [],
   },
 ];
@@ -130,7 +136,6 @@ const init = async () => {
   // Get the list of existing employees for manager selection
   const employeeList = await getEmployeeList();
   employeeQuestions[2].choices = employeeList;
-  updateRoleQuestions[0].choices = employeeList;
   // Add the employee choices to the employeeQuestions
   //   employeeQuestions[2] = {
   //     type: "list",
@@ -140,6 +145,9 @@ const init = async () => {
   //   };
   const roleList = await getRoleList();
   employeeQuestions[3].choices = roleList;
+
+  updateRoleQuestions[0].choices = employeeList;
+  updateRoleQuestions[1].choices = roleList;
   //   employeeQuestions[3] = {
   //     type: "list",
   //     name: "role_id",
