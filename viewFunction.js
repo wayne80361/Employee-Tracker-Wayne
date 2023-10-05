@@ -28,4 +28,15 @@ const viewAllEmployees = () => {
   );
 };
 
-module.exports = { viewAllEmployees };
+const viewAllDepartments = () => {
+  connection.query(`SELECT * FROM department`, (err, results) => {
+    if (err) {
+      console.error("Error fetching departments: ", err);
+    } else {
+      // Display the list of departments
+      console.table(results);
+    }
+  });
+};
+
+module.exports = { viewAllEmployees, viewAllDepartments };

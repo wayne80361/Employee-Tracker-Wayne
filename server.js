@@ -4,7 +4,8 @@ const { addEmployee } = require("./employeeFunction.js");
 const { addRole, updateRole } = require("./roleFunction.js");
 const { addDepartment } = require("./departmentFunction.js");
 // const { updateRole } = require("./roleFunction.js");
-const { viewAllEmployees } = require("./viewFunction.js");
+const { viewAllEmployees, viewAllDepartments } = require("./viewFunction.js");
+
 const connection = require("./config/connection.js");
 
 const employeeQuestions = [
@@ -170,6 +171,7 @@ const init = async () => {
           "Add Department",
           "Update Role",
           "View All Employee",
+          "View All Department",
         ],
       },
     ])
@@ -192,6 +194,8 @@ const init = async () => {
         });
       } else if (answers.action === "View All Employee") {
         viewAllEmployees();
+      } else if (answers.action === "View All Department") {
+        viewAllDepartments();
       }
     });
 };
