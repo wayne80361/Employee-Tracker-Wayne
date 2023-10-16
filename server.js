@@ -163,8 +163,8 @@ const init = async () => {
   const departmentList = await getDepartmentList();
   roleQuestions[2].choices = departmentList;
 
-  inquirer
-    .prompt([
+  try {
+    const answers = await inquirer.prompt([
       {
         type: "list",
         name: "action",
@@ -177,33 +177,71 @@ const init = async () => {
           "View All Employees",
           "View All Departments",
           "View all Roles",
+          "Exit",
         ],
       },
-    ])
-    .then((answers) => {
-      if (answers.action === "Add Employee") {
-        inquirer.prompt(employeeQuestions).then((employeeData) => {
-          addEmployee(employeeData);
-        });
-      } else if (answers.action === "Add Role") {
-        inquirer.prompt(roleQuestions).then((roleData) => {
-          addRole(roleData);
-        });
-      } else if (answers.action === "Add Department") {
-        inquirer.prompt(departmentQuestions).then((departmentData) => {
-          addDepartment(departmentData);
-        });
-      } else if (answers.action === "Update a Role") {
-        inquirer.prompt(updateRoleQuestions).then((updateRoleData) => {
-          updateRole(updateRoleData);
-        });
-      } else if (answers.action === "View All Employees") {
-        viewAllEmployees();
-      } else if (answers.action === "View All Departments") {
-        viewAllDepartments();
-      } else if (answers.action === "View all Roles") {
-        viewAllRoles();
-      }
-    });
+    ]);
+    // trying to use switch statement to see if it can call back inquirer in a better way.
+    // .then(function (response) {
+    //   abcde(response.action);
+    // })
+
+    if (answers.action === "Add Employee") {
+      const employeeData = await inquirer.prompt(employeeQuestions);
+      addEmployee(employeeData);
+    } else if (answers.action === "Add Role") {
+      const roleData = await inquirer.prompt(roleQuestions);
+      addRole(roleData);
+    } else if (answers.action === "Add Department") {
+      const departmentData = await inquirer.prompt(departmentQuestions);
+      addDepartment(departmentData);
+    } else if (answers.action === "Update a Role") {
+      const updateRoleData = await inquirer.prompt(updateRoleQuestions);
+      updateRole(updateRoleData);
+    } else if (answers.action === "View All Employees") {
+      viewAllEmployees();
+    } else if (answers.action === "View All Departments") {
+      viewAllDepartments();
+    } else if (answers.action === "View all Roles") {
+      viewAllRoles();
+    } else if (answers.action === "Exit") {
+      console.log("\x1b[33mGoodbye!\x1b[37m");
+      process.exit(0);
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+  // call back init function after an action is done
+  init();
 };
+
+// function abcde(action) {
+//   switch (action) {
+//     case "Add Employee":
+//       inquirer.prompt(employeeQuestions).then((employeeData) => {
+//         addEmployee(employeeData);
+//       });
+//       break;
+//     case "Add Role":
+//       addRole(roleData);
+//       break;
+//     case "Add Department":
+//       addDepartment(departmentData);
+//       break;
+//     case "Update a Role":
+//       viewAllEmployees();
+//       break;
+//     case "View All Employees":
+//       viewAllEmployees();
+//       break;
+//     case "View All Departments":
+//       viewAllDepartments();
+//       break;
+//     case "View all Roles":
+//       viewAllRoles();
+//       break;
+//   }
+//   init();
+// }
+
 init();
